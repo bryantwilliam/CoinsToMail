@@ -1,0 +1,8 @@
+name: CoinsToMail
+version: 1.0.0-DEVELOPMENT-SNAPSHOT
+main: com.gmail.gogobebe2.coinstomail.Main
+description: Paypal email/coin emailer.
+author: William Bryant (gogobebe2)
+website: gogobebe2@gmail.com
+commands:
+  cashout:
