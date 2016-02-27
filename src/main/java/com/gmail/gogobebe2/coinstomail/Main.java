@@ -81,9 +81,6 @@ public class Main extends JavaPlugin {
 
             text = "Coins: " + numberOfCoins + ", Paypal email: " + paypalEmail;
 
-            // debug:
-            removeCoins(numberOfCoins, player.getInventory());
-
             if (sendMail(serverOwnerEmail, paypalEmail, username, password, host, port, subject, text)) {
                 getLogger().log(Level.INFO, "Sent email '" + text + "' with the subject '" + subject + "'.");
                 removeCoins(numberOfCoins, player.getInventory());
@@ -97,10 +94,8 @@ public class Main extends JavaPlugin {
         return false;
     }
 
-    private void removeCoins(int amount, PlayerInventory inventory) {
+    private void removeCoins(int amountLeftToTakeAway, PlayerInventory inventory) {
         HashMap<Integer, ? extends ItemStack> coins = inventory.all(Material.EMERALD);
-
-        int amountLeftToTakeAway = amount;
 
         for (ItemStack coin : coins.values()) {
             int coinAmount = coin.getAmount();
