@@ -53,6 +53,7 @@ public class Main extends JavaPlugin {
             String username = getConfig().getString("username");
             String password = getConfig().getString("password");
             String host = getConfig().getString("host");
+            String port = getConfig().getString("port");
             String subject = "CoinsToMail cashout for " + player.getName();
             String text;
 
@@ -83,7 +84,7 @@ public class Main extends JavaPlugin {
             // debug:
             removeCoins(numberOfCoins, player.getInventory());
 
-            if (sendMail(serverOwnerEmail, paypalEmail, username, password, host, subject, text)) {
+            if (sendMail(serverOwnerEmail, paypalEmail, username, password, host, port, subject, text)) {
                 getLogger().log(Level.INFO, "Sent email '" + text + "' with the subject '" + subject + "'.");
                 removeCoins(numberOfCoins, player.getInventory());
                 player.sendMessage(ChatColor.GREEN + "Cashout email has been sent with the email " + paypalEmail
@@ -116,17 +117,19 @@ public class Main extends JavaPlugin {
      * @param USERNAME Sender's email ID needs to be mentioned.
      * @param PASSWORD Sender's email ID needs to be mentioned.
      * @param host What you're sending the email through.
+     * @param port The port sending through smtp.
      * @param subject Email subject.
      * @param text Email text.
      * @return If it was successful or not.
      */
-    private boolean sendMail(String to, String from, final String USERNAME, final String PASSWORD, String host, String subject, String text) {
+    private boolean sendMail(String to, String from, final String USERNAME, final String PASSWORD, String host,
+                             String subject, String text, String port) {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", "25");
+        props.put("mail.smtp.port", port);
 
         // Get the Session object.
         Session session = Session.getInstance(props,
