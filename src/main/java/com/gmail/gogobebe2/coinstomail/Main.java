@@ -64,7 +64,7 @@ public class Main extends JavaPlugin {
 
             paypalEmail = args[1];
 
-            if (coins == null || numberOfCoins >= coins.size()) {
+            if (coins == null || numberOfCoins > coins.size()) {
                 player.sendMessage(ChatColor.RED + "Error! You don't have " + numberOfCoins + " coins!");
                 return true;
             }
@@ -132,7 +132,8 @@ public class Main extends JavaPlugin {
             Transport.send(message);
 
             return true;
-        } catch (MessagingException e) {
+        } catch (MessagingException me) {
+            me.printStackTrace();
             return false;
         }
     }
