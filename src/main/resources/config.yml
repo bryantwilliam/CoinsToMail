@@ -1,5 +1,5 @@
 username: 'username'
 password: '******'
 host: 'smtp.gmail.com'
-port: '587'
+port: '465'
 yourEmail: 'youremail@gmail.com'

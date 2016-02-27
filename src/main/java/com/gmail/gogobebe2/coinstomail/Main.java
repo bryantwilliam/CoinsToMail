@@ -126,42 +126,29 @@ public class Main extends JavaPlugin {
                              String subject, String text, String port) {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
+        props.put("mail.smtp.socketFactory.port", port);
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", port);
-
-        // Get the Session object.
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                 });
-
         try {
-            // Create a default MimeMessage object.
             Message message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
-
-            // Set Subject: header field
             message.setSubject(subject);
-
-            // Now set the actual message
             message.setText(text);
-
-            // Send message
             Transport.send(message);
-
             return true;
-        } catch (MessagingException me) {
-            me.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
             return false;
         }
     }
