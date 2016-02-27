@@ -100,13 +100,19 @@ public class Main extends JavaPlugin {
     private void removeCoins(int amount, PlayerInventory inventory) {
         HashMap<Integer, ? extends ItemStack> coins = inventory.all(Material.EMERALD);
 
+        int amountLeftToTakeAway = amount;
+
         for (ItemStack coin : coins.values()) {
-            amount-= coin.getAmount();
-            if (amount <= 0) {
-                coin.setAmount(amount * -1);
+            int coinAmount = coin.getAmount();
+
+            if (amountLeftToTakeAway >= coinAmount) {
+                amountLeftToTakeAway -= coinAmount;
+                coin.setAmount(0);
+            }
+            else {
+                coin.setAmount(coinAmount - amountLeftToTakeAway);
                 break;
             }
-            else coin.setAmount(0);
         }
     }
 
