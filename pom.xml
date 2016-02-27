@@ -6,7 +6,7 @@
 
     <groupId>com.gmail.gogobebe2</groupId>
     <artifactId>CoinsToMail</artifactId>
-    <version>1.0.3-DEVELOPMENT-SNAPSHOT</version>
+    <version>1.1.0-DEVELOPMENT-SNAPSHOT</version>
 
     <build>
         <plugins>
@@ -30,7 +30,7 @@
                             </relocations>
                             <artifactSet>
                                 <includes>
-                                    <include>javax.mail:javax.mail-api</include>
+                                    <include>javax.mail:mail</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -54,6 +54,10 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>Java.Net</id>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -64,8 +68,8 @@
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
-            <artifactId>javax.mail-api</artifactId>
-            <version>1.5.5</version>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
         </dependency>
     </dependencies>
 
