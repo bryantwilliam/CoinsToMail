@@ -4,11 +4,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ArenaCommand extends Command {
-    public ArenaCommand(CommandSender sender, String[] args) {
+public class ArenaRunnableCommand extends RunnableCommand {
+    public ArenaRunnableCommand(CommandSender sender, String[] args) {
         super(sender, args);
     }
 
+    @Override
     public void run() {
         if (!getSender().hasPermission("cointstomail.admin")) {
             getSender().sendMessage(ChatColor.RED + "You do not have permission to use this command!");

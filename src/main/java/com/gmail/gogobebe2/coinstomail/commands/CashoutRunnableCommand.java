@@ -15,12 +15,13 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Level;
 
-public class CashoutCommand extends Command {
+public class CashoutRunnableCommand extends RunnableCommand {
 
-    public CashoutCommand(CommandSender sender, String[] args) {
+    public CashoutRunnableCommand(CommandSender sender, String[] args) {
         super(sender, args);
     }
 
+    @Override
     public void run() {
         if (!(getSender() instanceof Player)) {
             getSender().sendMessage(ChatColor.RED + "Error! You need to be a player to use this command!");
