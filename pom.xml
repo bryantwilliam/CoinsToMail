@@ -6,7 +6,7 @@
 
     <groupId>com.gmail.gogobebe2</groupId>
     <artifactId>CoinsToMail</artifactId>
-    <version>1.3.2-DEVELOPMENT-SNAPSHOT</version>
+    <version>1.4.0-DEVELOPMENT-SNAPSHOT</version>
 
     <build>
         <plugins>
