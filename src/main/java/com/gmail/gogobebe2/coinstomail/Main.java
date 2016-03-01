@@ -1,6 +1,6 @@
 package com.gmail.gogobebe2.coinstomail;
 
-import com.gmail.gogobebe2.coinstomail.commands.ArenaRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.commands.arena.ArenaRunnableCommand;
 import com.gmail.gogobebe2.coinstomail.commands.CashoutRunnableCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
