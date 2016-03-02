@@ -1,7 +1,9 @@
 package com.gmail.gogobebe2.coinstomail;
 
-import com.gmail.gogobebe2.coinstomail.commands.arena.ArenaRunnableCommand;
 import com.gmail.gogobebe2.coinstomail.commands.CashoutRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.commands.CreateKitRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.commands.duel.ArenaRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.commands.duel.DuelRunnableCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +28,9 @@ public class Main extends JavaPlugin {
         Runnable runnable = null;
 
         if (label.equalsIgnoreCase("cashout")) runnable = new CashoutRunnableCommand(sender, args);
-        else if (label.equalsIgnoreCase("arena")) runnable = new ArenaRunnableCommand(sender, args);
+        else if (label.equalsIgnoreCase("duel")) runnable = new ArenaRunnableCommand(sender, args);
+        else if (label.equalsIgnoreCase("duel") || label.equalsIgnoreCase("1v1")) runnable = new DuelRunnableCommand(sender, args);
+        else if (label.equalsIgnoreCase("createkit") || label.equalsIgnoreCase("kit")) runnable = new CreateKitRunnableCommand(sender, args);
 
         if (runnable != null) {
             runnable.run();

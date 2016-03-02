@@ -7,6 +7,10 @@ website: gogobebe2@gmail.com
 commands:
   cashout:
   arena:
+  duel:
+    aliases: [1v1]
+  createkit:
+    aliases: [kit]
 permissions:
   cointstomail.admin:
     default: op

@@ -1,4 +1,4 @@
-package com.gmail.gogobebe2.coinstomail.commands.arena;
+package com.gmail.gogobebe2.coinstomail.commands.duel;
 
 public enum PositionType {
     POS1("pos1"),

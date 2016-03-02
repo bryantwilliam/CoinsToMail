@@ -1,4 +1,4 @@
-package com.gmail.gogobebe2.coinstomail.commands.arena;
+package com.gmail.gogobebe2.coinstomail.commands.duel;
 
 import com.gmail.gogobebe2.coinstomail.Main;
 import com.gmail.gogobebe2.coinstomail.commands.RunnableCommand;
@@ -28,88 +28,76 @@ public class ArenaRunnableCommand extends RunnableCommand {
         else {
             String arg1 = getArgs()[0];
             String arenaName = getArgs()[1];
-            final String configArenaPath = "Arenas." + arenaName;
+            final String CONFIG_ARENA_PATH = "Arenas." + arenaName;
+            final boolean ARENA_EXISTS = Main.getInstance().getConfig().contains(CONFIG_ARENA_PATH);
+            String message = ChatColor.RED + "Arena" + arenaName + "does not exist!";
             switch (arg1) {
                 case "define":
                 case "create":
-                    if (tryCreateArena(configArenaPath)) player.sendMessage(ChatColor.AQUA + "Arena "
-                            + ChatColor.GREEN + arenaName + ChatColor.AQUA + " created.");
-                    else player.sendMessage(ChatColor.RED + "Arena " + arenaName + " is already set!");
+                    if (ARENA_EXISTS) {
+                        createArena(CONFIG_ARENA_PATH);
+                        message = ChatColor.AQUA + "Arena " + ChatColor.GREEN + arenaName + ChatColor.AQUA + " created.";
+                    }
+                    else message = ChatColor.RED + "Arena " + arenaName + " is already set!";
                     break;
                 case "remove":
                 case "delete":
-                    if (tryDeleteArena(configArenaPath)) player.sendMessage(ChatColor.AQUA
-                            + "Arena " + ChatColor.GREEN + arenaName + ChatColor.AQUA + " deleted.");
-                    else player.sendMessage(ChatColor.RED + "Arena " + arenaName + " does not exist!");
+                    if (ARENA_EXISTS) {
+                        deleteArena(CONFIG_ARENA_PATH);
+                        message = ChatColor.AQUA + "Arena " + ChatColor.GREEN + arenaName + ChatColor.AQUA + " deleted.";
+                    }
                     break;
                 case "pos1":
                 case "position1":
                 case "spawn1":
-                    if (trySetPosition(configArenaPath, PositionType.POS1, player.getLocation())) {
-                        player.sendMessage(ChatColor.AQUA + "Set spawn 1 for " + ChatColor.GREEN + arenaName + ChatColor.AQUA + ".");
+                    if (ARENA_EXISTS) {
+                        setPosition(CONFIG_ARENA_PATH, PositionType.POS1, player.getLocation());
+                        message = ChatColor.AQUA + "Set spawn 1 for " + ChatColor.GREEN + arenaName + ChatColor.AQUA + ".";
                     }
-                    else player.sendMessage(ChatColor.RED + "Arena" + arenaName + "does not exist!");
                     break;
                 case "pos2":
                 case "position2":
                 case "spawn2":
-                    if (trySetPosition(configArenaPath, PositionType.POS2, player.getLocation())) {
-                        player.sendMessage(ChatColor.AQUA + "Set spawn 2 for " + ChatColor.GREEN + arenaName + ChatColor.AQUA + ".");
+                    if (ARENA_EXISTS) {
+                        setPosition(CONFIG_ARENA_PATH, PositionType.POS2, player.getLocation());
+                        message = ChatColor.AQUA + "Set spawn 2 for " + ChatColor.GREEN + arenaName + ChatColor.AQUA + ".";
                     }
-                    else player.sendMessage(ChatColor.RED + "Arena" + arenaName + "does not exist!");
                     break;
                 default:
                     displayHelp(player);
+                    return;
             }
+            player.sendMessage(message);
         }
     }
 
-    private boolean arenaExists(String configArenaPath) {
-        return Main.getInstance().getConfig().contains(configArenaPath);
-    }
-
-    /**
-     * @return If the arena wanting to be created exists.
-     */
-    private boolean tryCreateArena(String configArenaPath) {
-        if (arenaExists(configArenaPath)) return false;
+    private void createArena(final String CONFIG_ARENA_PATH) {
         Main main = Main.getInstance();
-        main.getConfig().set(configArenaPath + ".pos1", -1);
-        main.getConfig().set(configArenaPath + ".pos2", -1);
+        main.getConfig().set(CONFIG_ARENA_PATH + ".pos1", -1);
+        main.getConfig().set(CONFIG_ARENA_PATH + ".pos2", -1);
         main.saveConfig();
-        return true;
     }
 
-    /**
-     * @return If the arena wanting to be deleted exists.
-     */
-    private boolean tryDeleteArena(String configArenaPath) {
-        if (!arenaExists(configArenaPath)) return false;
+    private void deleteArena(final String CONFIG_ARENA_PATH) {
         Main main = Main.getInstance();
-        main.getConfig().set(configArenaPath, null);
+        main.getConfig().set(CONFIG_ARENA_PATH, null);
         main.saveConfig();
-        return true;
     }
 
-    /**
-     * @return If the arena wanting to set position exists.
-     */
-    private boolean trySetPosition(String configArenaPath, PositionType positionType, Location location) {
-        if (!arenaExists(configArenaPath)) return false;
+    private void setPosition(final String CONFIG_ARENA_PATH, PositionType positionType, Location location) {
         Main main = Main.getInstance();
-        String posPathPrefix = configArenaPath + "." + positionType.getConfigId() + ".";
+        String posPathPrefix = CONFIG_ARENA_PATH + "." + positionType.getConfigId() + ".";
         main.getConfig().set(posPathPrefix + "x", location.getX());
         main.getConfig().set(posPathPrefix + "y", location.getY());
         main.getConfig().set(posPathPrefix + "z", location.getZ());
         main.getConfig().set(posPathPrefix + "pitch", location.getPitch());
         main.getConfig().set(posPathPrefix + "yaw", location.getYaw());
         main.saveConfig();
-        return true;
     }
 
     private void displayHelp(Player player) {
         player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "CoinsToMail Admin Help Menu");
-        String bulletPointSuffix = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + " - " + ChatColor.BLUE + "/arena "
+        String bulletPointSuffix = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + " - " + ChatColor.BLUE + "/duel "
                 + ChatColor.GOLD + "<";
         player.sendMessage(bulletPointSuffix + "define/create>");
         player.sendMessage(bulletPointSuffix + "remove/delete>");
