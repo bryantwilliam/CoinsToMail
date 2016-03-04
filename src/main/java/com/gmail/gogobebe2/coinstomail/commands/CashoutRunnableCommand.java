@@ -23,12 +23,12 @@ public class CashoutRunnableCommand extends RunnableCommand {
 
     @Override
     public void run() {
-        if (!(getSender() instanceof Player)) {
+        Player player;
+        if (getSender() instanceof Player) player = (Player) getSender();
+        else {
             getSender().sendMessage(ChatColor.RED + "Error! You need to be a player to use this command!");
             return;
         }
-
-        Player player = (Player) getSender();
 
         if (getArgs().length != 2) {
             player.sendMessage(ChatColor.RED + "Error! Incorrect command usage, use it like: "
@@ -102,15 +102,6 @@ public class CashoutRunnableCommand extends RunnableCommand {
     }
 
     /**
-     *
-     * @param to Recipient's email ID needs to be mentioned.
-     * @param from Sender's email ID needs to be mentioned.
-     * @param USERNAME Sender's email ID needs to be mentioned.
-     * @param PASSWORD Sender's email ID needs to be mentioned.
-     * @param host What you're sending the email through.
-     * @param port The port sending through smtp.
-     * @param subject Email subject.
-     * @param text Email text.
      * @return If it was successful or not.
      */
     private boolean sendMail(String to, String from, final String USERNAME, final String PASSWORD, String host, String port,

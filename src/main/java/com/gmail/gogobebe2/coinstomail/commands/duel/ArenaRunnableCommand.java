@@ -1,6 +1,7 @@
 package com.gmail.gogobebe2.coinstomail.commands.duel;
 
 import com.gmail.gogobebe2.coinstomail.Main;
+import com.gmail.gogobebe2.coinstomail.arena.PositionType;
 import com.gmail.gogobebe2.coinstomail.commands.RunnableCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -92,6 +93,7 @@ public class ArenaRunnableCommand extends RunnableCommand {
         main.getConfig().set(posPathPrefix + "z", location.getZ());
         main.getConfig().set(posPathPrefix + "pitch", location.getPitch());
         main.getConfig().set(posPathPrefix + "yaw", location.getYaw());
+        main.getConfig().set(posPathPrefix + "world", location.getWorld().getName());
         main.saveConfig();
     }
 
@@ -99,9 +101,9 @@ public class ArenaRunnableCommand extends RunnableCommand {
         player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "CoinsToMail Admin Help Menu");
         String bulletPointSuffix = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + " - " + ChatColor.BLUE + "/duel "
                 + ChatColor.GOLD + "<";
-        player.sendMessage(bulletPointSuffix + "define/create>");
-        player.sendMessage(bulletPointSuffix + "remove/delete>");
-        player.sendMessage(bulletPointSuffix + "pos1/position1/spawn1>");
-        player.sendMessage(bulletPointSuffix + "pos2/position2/spawn2>");
+        player.sendMessage(bulletPointSuffix + "define|create>");
+        player.sendMessage(bulletPointSuffix + "remove|delete>");
+        player.sendMessage(bulletPointSuffix + "pos1|position1|spawn1>");
+        player.sendMessage(bulletPointSuffix + "pos2|position2|spawn2>");
     }
 }

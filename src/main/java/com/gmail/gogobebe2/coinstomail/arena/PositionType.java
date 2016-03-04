@@ -1,4 +1,4 @@
-package com.gmail.gogobebe2.coinstomail.commands.duel;
+package com.gmail.gogobebe2.coinstomail.arena;
 
 public enum PositionType {
     POS1("pos1"),
@@ -10,11 +10,11 @@ public enum PositionType {
         this.configId = configId;
     }
 
-    protected String getConfigId() {
+    public String getConfigId() {
         return this.configId;
     }
 
-    static PositionType getByConfigID(String configId) {
+    protected static PositionType getByConfigID(String configId) {
         for (PositionType positionType : PositionType.values()) if (positionType.configId.equals(configId)) return positionType;
         return null;
     }
