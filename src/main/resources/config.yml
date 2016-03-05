@@ -5,3 +5,5 @@ port: '587'
 yourEmail: 'youremail@gmail.com'
 Arenas:
 Kits:
+# minutes:
+Gametime: 15

@@ -1,8 +1,7 @@
-package com.gmail.gogobebe2.coinstomail.commands.duel;
+package com.gmail.gogobebe2.coinstomail.commands;
 
 import com.gmail.gogobebe2.coinstomail.Main;
-import com.gmail.gogobebe2.coinstomail.arena.PositionType;
-import com.gmail.gogobebe2.coinstomail.commands.RunnableCommand;
+import com.gmail.gogobebe2.coinstomail.duel.arena.PositionType;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

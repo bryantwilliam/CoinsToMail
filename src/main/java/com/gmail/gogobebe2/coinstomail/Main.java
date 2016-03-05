@@ -1,9 +1,10 @@
 package com.gmail.gogobebe2.coinstomail;
 
+import com.gmail.gogobebe2.coinstomail.commands.ArenaRunnableCommand;
 import com.gmail.gogobebe2.coinstomail.commands.CashoutRunnableCommand;
 import com.gmail.gogobebe2.coinstomail.commands.CreateKitRunnableCommand;
-import com.gmail.gogobebe2.coinstomail.commands.duel.ArenaRunnableCommand;
-import com.gmail.gogobebe2.coinstomail.commands.duel.DuelRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.commands.DuelRunnableCommand;
+import com.gmail.gogobebe2.coinstomail.duel.DuelManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +19,7 @@ public class Main extends JavaPlugin {
         instance = this;
         getLogger().info("Starting up " + this.getName() + ". If you need me to update this plugin, email at gogobebe2@gmail.com");
         saveDefaultConfig();
-        Bukkit.getPluginManager().registerEvents(DuelRunnableCommand.getDuelListener(), this);
+        Bukkit.getPluginManager().registerEvents(DuelManager.getInstance(), this);
     }
 
     @Override

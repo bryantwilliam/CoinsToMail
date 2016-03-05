@@ -1,10 +1,15 @@
-package com.gmail.gogobebe2.coinstomail.arena;
+package com.gmail.gogobebe2.coinstomail.duel.arena;
 
 import com.gmail.gogobebe2.coinstomail.Main;
+import com.gmail.gogobebe2.coinstomail.duel.DuelManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class Arena {
+
     private Location pos1;
     private Location pos2;
     private String name;
@@ -46,7 +51,25 @@ public class Arena {
         return this.busy;
     }
 
-    protected void setBusy(boolean busy) {
-        this.busy = busy;
+    public void joinArena(Player player, Player opponent, Arena arena) {
+        busy = true;
+
+        String joinMessage = ChatColor.DARK_GREEN + "Joining arena " + ChatColor.GREEN + arena.getName()
+                + ChatColor.DARK_GREEN + "...";
+        player.sendMessage(joinMessage);
+        opponent.sendMessage(joinMessage);
+
+        player.setGameMode(GameMode.ADVENTURE);
+        opponent.setGameMode(GameMode.ADVENTURE);
+
+        Location pos1 = arena.getPos1();
+        Location pos2 = arena.getPos2();
+
+        player.teleport(pos1);
+        opponent.teleport(pos2);
+
+        // TODO: give kits
+
+        DuelManager.getInstance().startDuel(player, opponent, arena);
     }
 }
