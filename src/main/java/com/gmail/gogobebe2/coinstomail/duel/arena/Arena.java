@@ -51,6 +51,10 @@ public class Arena {
         return this.busy;
     }
 
+    public void setBusy(boolean busy) {
+        this.busy = busy;
+    }
+
     public void joinArena(Player player, Player opponent, Arena arena) {
         busy = true;
 
