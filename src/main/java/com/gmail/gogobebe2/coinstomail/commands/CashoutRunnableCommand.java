@@ -84,23 +84,6 @@ public class CashoutRunnableCommand extends RunnableCommand {
         else player.sendMessage(ChatColor.RED + "An error occurred while sending the cashout email.");
     }
 
-    private void removeCoins(int amountLeftToTakeAway, PlayerInventory inventory) {
-        HashMap<Integer, ? extends ItemStack> coins = inventory.all(Material.EMERALD);
-
-        for (ItemStack coin : coins.values()) {
-            int coinAmount = coin.getAmount();
-
-            if (amountLeftToTakeAway >= coinAmount) {
-                amountLeftToTakeAway -= coinAmount;
-                coin.setAmount(0);
-            }
-            else {
-                coin.setAmount(coinAmount - amountLeftToTakeAway);
-                break;
-            }
-        }
-    }
-
     /**
      * @return If it was successful or not.
      */
@@ -145,6 +128,23 @@ public class CashoutRunnableCommand extends RunnableCommand {
         } catch (MessagingException me) {
             me.printStackTrace();
             return false;
+        }
+    }
+
+    public static void removeCoins(int amountLeftToTakeAway, PlayerInventory inventory) {
+        HashMap<Integer, ? extends ItemStack> coins = inventory.all(Material.EMERALD);
+
+        for (ItemStack coin : coins.values()) {
+            int coinAmount = coin.getAmount();
+
+            if (amountLeftToTakeAway >= coinAmount) {
+                amountLeftToTakeAway -= coinAmount;
+                coin.setAmount(0);
+            }
+            else {
+                coin.setAmount(coinAmount - amountLeftToTakeAway);
+                break;
+            }
         }
     }
 }

@@ -1,15 +1,18 @@
 package com.gmail.gogobebe2.coinstomail.duel;
 
+import com.gmail.gogobebe2.coinstomail.commands.CashoutRunnableCommand;
 import com.gmail.gogobebe2.coinstomail.duel.arena.Arena;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 
@@ -31,6 +34,10 @@ public class DuelManager implements Listener {
 
     }
 
+    public void addInitialLocation(UUID playerUUID, Location initialLocation) {
+        initialLocations.put(playerUUID, initialLocation);
+    }
+
     public void startDuel(Player player, Player opponent, Arena arena) {
         duels.add(new Duel(player, opponent, arena));
     }
@@ -42,8 +49,7 @@ public class DuelManager implements Listener {
         if (loserUUID.equals(duel.getPlayer().getUniqueId())) {
             loser = duel.getPlayer();
             winner = duel.getOpponent();
-        }
-        else {
+        } else {
             loser = duel.getOpponent();
             winner = duel.getPlayer();
         }
@@ -53,7 +59,35 @@ public class DuelManager implements Listener {
 
         Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + winner.getDisplayName() + " won a duel with "
                 + loser.getDisplayName() + "!!");
-        // TODO: -1 coin from loser, +1 coin to winner.
+
+        if (initialLocations.containsKey(winner.getUniqueId())) leaveDuel(winner, true);
+    }
+
+    private void leaveDuel(Player player, boolean won) {
+        UUID playerUUID = player.getUniqueId();
+
+        player.sendMessage(ChatColor.GREEN + "Teleporting to initial location...");
+        player.teleport(initialLocations.get(playerUUID));
+
+        // TODO: reset old inventory.
+
+        PlayerInventory inventory = player.getInventory();
+        if (won) {
+            int firstEmeraldSlot = inventory.first(Material.EMERALD);
+            if (firstEmeraldSlot != -1) {
+                ItemStack firstEmerald = inventory.getItem(firstEmeraldSlot);
+                firstEmerald.setAmount(firstEmerald.getAmount() + 1);
+            }
+            else inventory.addItem(new ItemStack(Material.EMERALD, 1));
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "1 coin has been removed from your inventory for losing.");
+        }
+        else {
+            CashoutRunnableCommand.removeCoins(1, inventory);
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "1 coin has been removed from your inventory for losing.");
+        }
+
+
+        initialLocations.remove(playerUUID);
     }
 
     @EventHandler
@@ -68,19 +102,11 @@ public class DuelManager implements Listener {
         for (Duel duel : duels) {
             if (playerUUID.equals(duel.getPlayer().getUniqueId()) || playerUUID.equals(duel.getOpponent().getUniqueId())) {
                 endDuel(duel, playerUUID);
+                player.spigot().respawn();
+                if (initialLocations.containsKey(playerUUID)) leaveDuel(player, false);
             }
         }
+
     }
 
-    @EventHandler
-    private void onPlayerRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-        UUID playerUUID = player.getUniqueId();
-
-        if (initialLocations.containsKey(playerUUID)) {
-            player.teleport(initialLocations.get(playerUUID));
-            player.sendMessage(ChatColor.GREEN + "Teleporting to initial location...");
-            initialLocations.remove(playerUUID);
-        }
-    }
 }
