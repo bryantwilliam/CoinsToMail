@@ -71,14 +71,14 @@ public class Arena {
 
         DuelManager duelManager = DuelManager.getInstance();
 
-        duelManager.addInitialLocation(player.getUniqueId(), player.getLocation());
-        duelManager.addInitialLocation(opponent.getUniqueId(), opponent.getLocation());
+        Location playerInitLocation = player.getLocation().clone();
+        Location opponentInitLocation = opponent.getLocation().clone();
 
         player.teleport(pos1);
         opponent.teleport(pos2);
 
         // TODO: give kits
 
-        duelManager.startDuel(player, opponent, arena);
+        duelManager.startDuel(player, opponent, arena, playerInitLocation, opponentInitLocation);
     }
 }
