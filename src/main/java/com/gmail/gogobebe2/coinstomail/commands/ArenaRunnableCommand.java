@@ -34,7 +34,7 @@ public class ArenaRunnableCommand extends RunnableCommand {
             switch (arg1) {
                 case "define":
                 case "create":
-                    if (ARENA_EXISTS) {
+                    if (!ARENA_EXISTS) {
                         createArena(CONFIG_ARENA_PATH);
                         message = ChatColor.AQUA + "Arena " + ChatColor.GREEN + arenaName + ChatColor.AQUA + " created.";
                     }
