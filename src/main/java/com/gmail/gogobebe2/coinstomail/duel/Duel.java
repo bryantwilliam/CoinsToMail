@@ -65,7 +65,7 @@ public class Duel {
                 firstEmerald.setAmount(firstEmerald.getAmount() + 1);
             }
             else inventory.addItem(new ItemStack(Material.EMERALD, 1));
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "1 coin has been removed from your inventory for losing.");
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "1 coin has been added to your inventory for winning.");
         }
         else {
             CashoutRunnableCommand.removeCoins(1, inventory);

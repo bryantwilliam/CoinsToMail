@@ -24,9 +24,28 @@ public class DuelManager implements Listener {
     }
 
     private Set<Duel> duels = new HashSet<>();
+    private Map<UUID, UUID[]> pendingRequests = new LinkedHashMap<>(); // Player, Array of potential opponents.
 
     private DuelManager() {
 
+    }
+
+    public void onRequest(UUID playerUUID, UUID[] potentialOpponentsUUIDs) {
+        pendingRequests.put(playerUUID, potentialOpponentsUUIDs);
+    }
+
+    public Player onAccept(UUID playerUUID) {
+
+        for (UUID requesterUUID : pendingRequests.keySet()) {
+            for (UUID potentialAccepterUUIDs : pendingRequests.get(requesterUUID)) {
+                if (potentialAccepterUUIDs.equals(playerUUID)) {
+                    pendingRequests.remove(requesterUUID);
+                    return Bukkit.getPlayer(requesterUUID);
+                }
+            }
+        }
+
+        return null;
     }
 
     public void startDuel(Player player, Player opponent, Arena arena, Location playerInitLocation, Location opponentInitLocation) {
@@ -37,6 +56,8 @@ public class DuelManager implements Listener {
         Player winner;
         Player loser;
 
+        duels.remove(duel);
+
         if (loserUUID.equals(duel.getPlayer().getUniqueId())) {
             loser = duel.getPlayer();
             winner = duel.getOpponent();
@@ -45,7 +66,6 @@ public class DuelManager implements Listener {
             winner = duel.getPlayer();
         }
 
-        duels.remove(duel);
         duel.getArena().setBusy(false);
 
         Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + winner.getDisplayName() + " won a duel with "
@@ -72,7 +92,6 @@ public class DuelManager implements Listener {
                 endDuel(duel, playerUUID);
             }
         }
-
     }
 
 }

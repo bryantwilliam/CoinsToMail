@@ -99,10 +99,10 @@ public class ArenaRunnableCommand extends RunnableCommand {
     private void displayHelp(Player player) {
         player.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "CoinsToMail Admin Help Menu");
         String bulletPointSuffix = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + " - " + ChatColor.BLUE + "/arena "
-                + ChatColor.GOLD + "<";
-        player.sendMessage(bulletPointSuffix + "define|create> <name>");
-        player.sendMessage(bulletPointSuffix + "remove|delete> <name>");
-        player.sendMessage(bulletPointSuffix + "pos1|position1|spawn1>");
-        player.sendMessage(bulletPointSuffix + "pos2|position2|spawn2>");
+                + ChatColor.GOLD;
+        player.sendMessage(bulletPointSuffix + "define|create <name>");
+        player.sendMessage(bulletPointSuffix + "remove|delete <name>");
+        player.sendMessage(bulletPointSuffix + "pos1|position1|spawn1");
+        player.sendMessage(bulletPointSuffix + "pos2|position2|spawn2");
     }
 }
